@@ -1,12 +1,12 @@
 package vapasi.share;
 
-public class ShareValue {
+public class Investment {
 
     private String name;
     private int value;
     private int noOfShares;
 
-    public ShareValue(String name, int value, int noOfShares) {
+    public Investment(String name, int value, int noOfShares) {
         this.name = name;
         this.value = value;
         this.noOfShares = noOfShares;
@@ -26,7 +26,7 @@ public class ShareValue {
 
     @Override
     public String toString() {
-        return "ShareValue{" +
+        return "Investment{" +
                 "name='" + name + '\'' +
                 ", value=" + value +
                 ", noOfShares=" + noOfShares +

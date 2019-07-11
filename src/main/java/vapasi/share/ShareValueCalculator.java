@@ -3,49 +3,38 @@ package vapasi.share;
 import java.util.List;
 import java.util.Map;
 
-public class ShareValueCalculator {
+class ShareValueCalculator {
 
-    private List<ShareValue> shares;
+    private List<Investment> investments;
 
-    ShareValueCalculator(List<ShareValue> shares) {
-        this.shares = shares;
+    ShareValueCalculator(List<Investment> investments) {
+        this.investments = investments;
     }
 
-    String getStatus(Map<String, Integer> newValues) {
-        // return profit or Loss value
+    String getStatus(Map<String, Integer> currentShareValues) {
+        int purchasedShareValue = calculatePurchasedSharesValue();
+        int currentShareValue = calculateCurrentSharesValue(currentShareValues);
 
-        int actualShareValue = calculatePurchasedSharesValue();
-        int changedShareValue = calculateCurrentSharesValue(newValues);
-
-        if(actualShareValue <= changedShareValue)
-        {
-            return "Profit "+ (changedShareValue-actualShareValue);
-        }
-        else
-        {
-            return "Loss "+ (actualShareValue-changedShareValue);
+        if (purchasedShareValue <= currentShareValue) {
+            return "Profit " + (currentShareValue - purchasedShareValue);
+        } else {
+            return "Loss " + (purchasedShareValue - currentShareValue);
         }
     }
 
-    private int calculatePurchasedSharesValue()
-    {
-        // calculate total share value of actual shares
-
-        int actualShareValue = 0;
-        for (ShareValue share : shares) {
-            actualShareValue += share.getValue()*share.getNoOfShares();
+    private int calculatePurchasedSharesValue() {
+        int totalShareValue = 0;
+        for (Investment investment : investments) {
+            totalShareValue += investment.getValue() * investment.getNoOfShares();
         }
-        return actualShareValue;
+        return totalShareValue;
     }
 
-    private int calculateCurrentSharesValue(Map<String, Integer> newShares)
-    {
-        // calculate total share value of changed shares
-        int changedShareValue=0;
-        for (ShareValue S :shares)
-        {
-            changedShareValue += newShares.getOrDefault(S.getName(),S.getValue())*S.getNoOfShares();
+    private int calculateCurrentSharesValue(Map<String, Integer> newShareValues) {
+        int totalShareValue = 0;
+        for (Investment investment : investments) {
+            totalShareValue += newShareValues.getOrDefault(investment.getName(), investment.getValue()) * investment.getNoOfShares();
         }
-        return changedShareValue;
+        return totalShareValue;
     }
 }
