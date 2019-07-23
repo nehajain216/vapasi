@@ -12,6 +12,11 @@ public class Investment {
         this.noOfShares = noOfShares;
     }
 
+    public Investment(int value, int noOfShares) {
+        this.value = value;
+        this.noOfShares = noOfShares;
+    }
+
     public String getName() {
         return name;
     }
